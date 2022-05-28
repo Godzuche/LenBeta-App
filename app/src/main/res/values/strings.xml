@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LenBeta App</string>
+    <string name="bt_teacher">Teacher</string>
+    <string name="bt_student">Student</string>
+    <string name="last_name">Last Name</string>
+    <string name="mat_no">Matriculation No.</string>
+    <string name="first_name">First Name</string>
+    <string name="faculty">Faculty</string>
+    <string name="department">Department</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+</resources>
