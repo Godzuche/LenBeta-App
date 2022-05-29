@@ -10,4 +10,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="productivity">Productivity</string>
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur edipicing elit, sed do eiusmod.</string>
+    <string name="communication">Communication</string>
 </resources>

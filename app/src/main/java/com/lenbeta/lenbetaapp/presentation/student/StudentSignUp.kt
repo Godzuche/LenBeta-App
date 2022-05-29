@@ -1,15 +1,14 @@
 package com.lenbeta.lenbetaapp.presentation.student
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,7 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.presentation.util.LenBetaScreen
+import com.lenbeta.lenbetaapp.presentation.util.*
 
 @ExperimentalMaterial3Api
 @Composable
@@ -37,19 +35,7 @@ fun StudentSignUpScreen(navController: NavHostController) {
     MaterialTheme {
         Scaffold(
             topBar = {
-                SmallTopAppBar(
-                    title = {
-                        Text("Sign Up")
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "back icon"
-                            )
-                        }
-                    }
-                )
+                SmallAppBar(title = R.string.sign_up, navController = navController)
             }
         ) { innerPadding ->
             SignUpScreenContent(
@@ -62,22 +48,6 @@ fun StudentSignUpScreen(navController: NavHostController) {
 }
 
 @Composable
-fun MediumAppBar() {
-    MediumTopAppBar(
-        title = { Text(text = "Sign In") },
-        navigationIcon = {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Go back"
-            )
-        },
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
-    )
-}
-
-@Composable
 fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostController) {
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
@@ -85,9 +55,11 @@ fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostCon
     var department by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
+//    var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
     val keyboardOptions = KeyboardOptions.Default.copy(
+        capitalization = KeyboardCapitalization.Words,
         keyboardType = KeyboardType.Text,
         imeAction = ImeAction.Next
     )
@@ -117,11 +89,7 @@ fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostCon
         DetailTextField(
             value = lastName,
             label = R.string.last_name,
-            keyboardOptions = KeyboardOptions.Default.copy(
-                capitalization = KeyboardCapitalization.Words,
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
+            keyboardOptions = keyboardOptions,
             keyboardActions = onNextAction,
             onValueChange = { lastName = it }
         )
@@ -139,14 +107,17 @@ fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostCon
             keyboardActions = onNextAction,
             onValueChange = { department = it }
         )
-        DetailTextField(
+        PasswordTextField(
             value = password,
             label = R.string.password,
-            keyboardOptions = keyboardOptions,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Next
+            ),
             keyboardActions = onNextAction,
             onValueChange = { password = it }
         )
-        DetailTextField(
+        PasswordTextField(
             value = confirmPassword,
             label = R.string.confirm_password,
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -157,73 +128,16 @@ fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostCon
             onValueChange = { confirmPassword = it }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        TextButton(
-            onClick = { navController.navigate(LenBetaScreen.StudentSignIn.route) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(align = Alignment.End)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(text = "Already have an account?")
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = null
-                )
+        ExistingAccountSignInButton(
+            text = R.string.already_have_an_account,
+            onClick = {
+                navController.navigate(LenBetaScreen.StudentSignIn.route)
             }
-        }
+        )
         SignUpButton(
             text = R.string.sign_up,
             onSignUpClick = { }
         )
-    }
-}
-
-@Composable
-fun SignUpButton(
-    @StringRes text: Int,
-    onSignUpClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    FilledTonalButton(
-        onClick = onSignUpClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier)
-    ) {
-        Text(text = stringResource(text))
-    }
-}
-
-@Composable
-fun DetailTextField(
-    value: String,
-    @StringRes label: Int,
-    keyboardOptions: KeyboardOptions,
-    keyboardActions: KeyboardActions,
-    modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit,
-) {
-    TextField(
-        value = value,
-        label = { Text(stringResource(label)) },
-        onValueChange = onValueChange,
-        singleLine = true,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier)
-    )
-}
-
-@Preview
-@Composable
-fun TopAppBarPreview() {
-    MaterialTheme {
-        SmallTopAppBar(title = { Text("Sign In") })
     }
 }
 

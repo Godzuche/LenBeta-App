@@ -35,9 +35,10 @@ fun UserSelection(
             Spacer(modifier = Modifier.height(16.dp))
             UserSelectionButton(
                 text = R.string.bt_teacher,
-                onButtonClick = {    navController.navigate(LenBetaScreen.TeacherSignUp.route)        }
+                onButtonClick = { navController.navigate(LenBetaScreen.TeacherSignUp.route) }
             )
-            UserSelectionButton(text = R.string.bt_student,
+            UserSelectionButton(
+                text = R.string.bt_student,
                 onButtonClick = { navController.navigate(LenBetaScreen.StudentSignUp.route) }
             )
         }
