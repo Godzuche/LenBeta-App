@@ -3,6 +3,7 @@ package com.lenbeta.lenbetaapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,21 +18,22 @@ import com.lenbeta.lenbetaapp.navigation.SetUpNavGraph
 import com.lenbeta.lenbetaapp.presentation.SplashViewModel
 import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var splashViewModel: SplashViewModel
+    //    @Inject
+//    lateinit var splashViewModel: SplashViewModel
+    val splashViewModel: SplashViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
             val isLoading by splashViewModel.isLoading
-            !isLoading
+            isLoading
         }
+        super.onCreate(savedInstanceState)
         setContent {
             LenBetaAppTheme {
                 Surface(
@@ -54,6 +56,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LenBetaApp(startDestination: String, navController: NavHostController) {
     LenBetaAppTheme {
-        SetUpNavGraph(startDestination = startDestination, navController = navController)
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            SetUpNavGraph(startDestination = startDestination, navController = navController)
+        }
     }
 }

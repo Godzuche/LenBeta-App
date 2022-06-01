@@ -10,16 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.presentation.util.LenBetaScreen
 
 @Composable
 fun UserSelection(
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    onTeacherSelected: () -> Unit = {},
+    onStudentSelected: () -> Unit = {}
 ) {
     LenBetaAppTheme() {
         Column(
@@ -35,11 +33,11 @@ fun UserSelection(
             Spacer(modifier = Modifier.height(16.dp))
             UserSelectionButton(
                 text = R.string.bt_teacher,
-                onButtonClick = { navController.navigate(LenBetaScreen.TeacherSignUp.route) }
+                onButtonClick = onTeacherSelected
             )
             UserSelectionButton(
                 text = R.string.bt_student,
-                onButtonClick = { navController.navigate(LenBetaScreen.StudentSignUp.route) }
+                onButtonClick = onStudentSelected
             )
         }
     }
@@ -61,6 +59,6 @@ fun UserSelectionButton(
 @Composable
 fun UserSelectionPreview() {
     LenBetaAppTheme() {
-        UserSelection(navController = rememberNavController())
+        UserSelection()
     }
 }

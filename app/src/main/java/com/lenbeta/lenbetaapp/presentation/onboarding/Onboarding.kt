@@ -2,58 +2,49 @@ package com.lenbeta.lenbetaapp.presentation.onboarding
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
+import com.google.accompanist.pager.rememberPagerState
 import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.presentation.util.LenBetaScreen
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
+    onClickNext: () -> Unit = {},
+//    onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     LenBetaAppTheme {
-        /*Box(
-            contentAlignment = Alignment.TopEnd,
-            modifier = Modifier
-                .padding(all = 16.dp)
-                .then(modifier)
-        ) {
-            NextButton {
-                onBoardingViewModel.saveOnboardingState(completed = true)
-//                navController.popBackStack()
-                navController.navigate(
-                    LenBetaScreen.UserSelection.route,
-                    NavOptions.Builder()
-                        .setPopUpTo(LenBetaScreen.UserSelection.route, inclusive = true).build()
-                )
-            }
-            Introduction(modifier = Modifier.align(Alignment.Center))
-        }*/
         val pages = listOf(
             OnBoardingPage.FirstPage,
             OnBoardingPage.SecondPage,
         )
-        val pagerState = rememberPagerState()
+        val pagerState = rememberPagerState(
+            initialPage = 0
+        )
         Box(
             contentAlignment = Alignment.TopEnd,
             modifier = Modifier
@@ -64,40 +55,76 @@ fun WelcomeScreen(
             Column(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxSize()
-
             ) {
                 HorizontalPager(
                     count = 2,
                     state = pagerState,
                     verticalAlignment = Alignment.Top,
+                    modifier = Modifier.weight(1f)
                 ) { position ->
                     PagerScreen(
-                        onBoardingPage = pages[position],
-                        modifier = Modifier
-                            .fillMaxHeight(0.85f)
-                            .fillMaxWidth()
+                        onBoardingPage = pages[position]
                     )
                 }
-                Spacer(modifier = Modifier.height(48.dp))
-                HorizontalPagerIndicator(
-                    pagerState = pagerState,
+                /* HorizontalPagerIndicator(
+                 pagerState = pagerState,
+                 modifier = Modifier
+                     .align(Alignment.CenterHorizontally)
+             )*/
+                PagerIndicator(
+                    pages = pages,
+                    currentPage = pagerState.currentPage,
                     modifier = Modifier
+                        .wrapContentHeight()
                         .align(Alignment.CenterHorizontally)
                 )
             }
             NextButton(
                 pagerState = pagerState,
-            ) {
-                onBoardingViewModel.saveOnboardingState(completed = true)
-//                navController.popBackStack()
-                navController.navigate(
-                    LenBetaScreen.UserSelection.route,
-                    NavOptions.Builder()
-                        .setPopUpTo(LenBetaScreen.UserSelection.route, inclusive = true).build()
-                )
-            }
+                onNextButtonClick = onClickNext
+            )
         }
     }
+}
+
+@Composable
+fun PagerIndicator(
+    pages: List<OnBoardingPage>,
+    currentPage: Int,
+    modifier: Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(all = 16.dp)
+            .then(modifier)
+    ) {
+        repeat(pages.size) {
+            Indicator(
+                isSelected = it == currentPage,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}
+
+@Composable
+fun Indicator(isSelected: Boolean, color: Color) {
+    val width by animateDpAsState(
+        targetValue = if (isSelected) 16.dp else 8.dp,
+        animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
+    )
+
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .height(4.dp)
+            .width(width)
+            .clip(CircleShape)
+            .background(
+                if (isSelected) color else Color.Gray.copy(alpha = 0.5f)
+            )
+    )
 }
 
 @Composable
@@ -123,9 +150,11 @@ fun PagerScreen(onBoardingPage: OnBoardingPage, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(id = onBoardingPage.description),
-            textAlign = TextAlign.Justify,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.wrapContentSize(Alignment.Center)
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
         )
     }
 }
@@ -182,6 +211,17 @@ fun Introduction(
     }
 }
 
+@Preview
+@Composable
+fun IndicatorPreview() {
+    PagerIndicator(
+        pages = listOf(
+            OnBoardingPage.FirstPage,
+            OnBoardingPage.SecondPage,
+        ), currentPage = 0, modifier = Modifier
+    )
+}
+
 @Preview(
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES,
@@ -191,7 +231,7 @@ fun Introduction(
 @Composable
 fun OnboardingScreenPreview() {
     LenBetaAppTheme {
-        WelcomeScreen(navController = rememberNavController())
+        WelcomeScreen()
     }
 }
 
