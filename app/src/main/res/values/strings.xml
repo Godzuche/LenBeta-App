@@ -14,4 +14,6 @@
     <string name="productivity">Productivity</string>
     <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur edipicing elit, sed do eiusmod.</string>
     <string name="communication">Communication</string>
+    <string name="my_profile">My Profile</string>
+    <string name="name">Name</string>
 </resources>

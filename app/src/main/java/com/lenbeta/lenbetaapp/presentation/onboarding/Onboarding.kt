@@ -1,16 +1,18 @@
 package com.lenbeta.lenbetaapp.presentation.onboarding
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +36,7 @@ import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
-    onClickNext: () -> Unit = {},
+    onFinishClick: () -> Unit = {},
 //    onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     LenBetaAppTheme {
@@ -54,7 +56,9 @@ fun WelcomeScreen(
         ) {
             Column(
                 verticalArrangement = Arrangement.Top,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             ) {
                 HorizontalPager(
                     count = 2,
@@ -78,10 +82,15 @@ fun WelcomeScreen(
                         .wrapContentHeight()
                         .align(Alignment.CenterHorizontally)
                 )
+                NextButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    pagerState = pagerState,
+                    onNextButtonClick = onFinishClick
+                )
             }
-            NextButton(
+            SkipButton(
                 pagerState = pagerState,
-                onNextButtonClick = onClickNext
+                onSkipClick = onFinishClick
             )
         }
     }
@@ -101,7 +110,7 @@ fun PagerIndicator(
     ) {
         repeat(pages.size) {
             Indicator(
-                isSelected = it == currentPage,
+                isSelected = (it == currentPage),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -111,7 +120,7 @@ fun PagerIndicator(
 @Composable
 fun Indicator(isSelected: Boolean, color: Color) {
     val width by animateDpAsState(
-        targetValue = if (isSelected) 16.dp else 8.dp,
+        targetValue = if (isSelected) 24.dp else 8.dp,
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy)
     )
 
@@ -168,21 +177,44 @@ fun NextButton(
 ) {
     AnimatedVisibility(
         modifier = modifier,
-        visible = pagerState.currentPage == 1
+        visible = (pagerState.currentPage == 1),
+        enter = expandIn(expandFrom = Alignment.Center),
+        exit = shrinkOut(shrinkTowards = Alignment.Center),
+        label = "Next Button"
     ) {
         OutlinedButton(
-            onClick = onNextButtonClick,
-//            modifier = modifier
+            onClick = onNextButtonClick
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(text = "Next")
+                Spacer(modifier = Modifier.width(8.dp))
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowRight,
+                    imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
                 )
-                Text(text = "Next")
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun SkipButton(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    onSkipClick: () -> Unit
+) {
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = (pagerState.currentPage != 1),
+        enter = expandHorizontally(),
+        exit = shrinkHorizontally(),
+        label = "Skip Button"
+    ) {
+        TextButton(onClick = onSkipClick) {
+            Text("Skip")
         }
     }
 }

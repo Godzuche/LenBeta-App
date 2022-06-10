@@ -32,10 +32,10 @@ import com.lenbeta.lenbetaapp.presentation.util.*
 @ExperimentalMaterial3Api
 @Composable
 fun StudentSignUpScreen(navController: NavHostController) {
-    MaterialTheme {
+    LenBetaAppTheme {
         Scaffold(
             topBar = {
-                SmallAppBar(title = R.string.sign_up, navController = navController)
+                SmallTopBar(title = R.string.sign_up, navController = navController)
             }
         ) { innerPadding ->
             SignUpScreenContent(
@@ -136,7 +136,7 @@ fun SignUpScreenContent(modifier: Modifier = Modifier, navController: NavHostCon
         )
         SignUpButton(
             text = R.string.sign_up,
-            onSignUpClick = { }
+            onSignUpClick = { navController.navigate(LenBetaScreen.StudentMainScreen.route) }
         )
     }
 }

@@ -11,16 +11,18 @@ import com.lenbeta.lenbetaapp.presentation.theme.LenBetaAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentSignInScreen() {
-    Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(text = "Student Sign In")
-                }
-            )
+    LenBetaAppTheme {
+        Scaffold(
+            topBar = {
+                SmallTopAppBar(
+                    title = {
+                        Text(text = "Student Sign In")
+                    }
+                )
+            }
+        ) { innerPadding ->
+            StudentSignInScreenContent(modifier = Modifier.padding(innerPadding))
         }
-    ) { innerPadding ->
-        StudentSignInScreenContent(modifier = Modifier.padding(innerPadding))
     }
 }
 

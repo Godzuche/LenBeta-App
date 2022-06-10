@@ -7,4 +7,5 @@ sealed class LenBetaScreen(val route: String) {
     object StudentSignUp : LenBetaScreen(route = "student_sign_up_screen")
     object TeacherSignUp : LenBetaScreen(route = "teacher_sign_up_screen")
     object TeacherSignIn : LenBetaScreen(route = "teacher_sign_in_screen")
+    object StudentMainScreen : LenBetaScreen(route = "student_main_screen")
 }

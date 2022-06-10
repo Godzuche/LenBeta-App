@@ -35,7 +35,7 @@ fun TeacherSignUpScreen(navController: NavHostController) {
     LenBetaAppTheme {
         Scaffold(
             topBar = {
-                SmallAppBar(title = R.string.sign_up, navController = navController)
+                SmallTopBar(title = R.string.sign_up, navController = navController)
             }
         ) { innerPadding ->
             TeacherSignUpScreenContent(

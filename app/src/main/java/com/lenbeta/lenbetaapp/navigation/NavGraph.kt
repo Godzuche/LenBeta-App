@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.lenbeta.lenbetaapp.presentation.UserSelection
 import com.lenbeta.lenbetaapp.presentation.onboarding.OnBoardingViewModel
 import com.lenbeta.lenbetaapp.presentation.onboarding.WelcomeScreen
+import com.lenbeta.lenbetaapp.presentation.student.StudentMainScreen
 import com.lenbeta.lenbetaapp.presentation.student.StudentSignInScreen
 import com.lenbeta.lenbetaapp.presentation.student.StudentSignUpScreen
 import com.lenbeta.lenbetaapp.presentation.teacher.TeacherSignInScreen
@@ -54,6 +55,9 @@ fun SetUpNavGraph(
         }
         composable(route = LenBetaScreen.TeacherSignIn.route) {
             TeacherSignInScreen()
+        }
+        composable(route = LenBetaScreen.StudentMainScreen.route) {
+            StudentMainScreen()
         }
     }
 }
