@@ -1,7 +1,7 @@
 package com.lenbeta.lenbetaapp.di
 
 import android.content.Context
-import com.lenbeta.lenbetaapp.data.DatastoreRepository
+import com.lenbeta.lenbetaapp.data.repository.DatastoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
