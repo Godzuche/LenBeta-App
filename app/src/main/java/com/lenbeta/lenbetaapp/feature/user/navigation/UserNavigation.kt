@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.lenbeta.lenbetaapp.core.navigation.LenBetaNavigationDestination
-import com.lenbeta.lenbetaapp.feature.UsersRoute
+import com.lenbeta.lenbetaapp.feature.user.UsersRoute
 
 object UserDestination : LenBetaNavigationDestination {
     override val route = "user_route"

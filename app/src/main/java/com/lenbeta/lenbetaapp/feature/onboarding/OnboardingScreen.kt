@@ -25,13 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.feature.rememberLenBetaAppState
 
 @Composable
 fun OnboardingRoute(

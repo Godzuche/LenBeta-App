@@ -1,17 +1,23 @@
 package com.lenbeta.lenbetaapp.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.People
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.lenbeta.lenbetaapp.R.string.home
-import com.lenbeta.lenbetaapp.R.string.profile
-import com.lenbeta.lenbetaapp.feature.user.student.home.StudentHomeDestination
-import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
+import com.lenbeta.lenbetaapp.R
+import com.lenbeta.lenbetaapp.R.string.*
+import com.lenbeta.lenbetaapp.feature.user.student.home.dashboard.navigation.StudentDashboardDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.explore.navigation.ExploreDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.peers.navigation.PeersDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.profile.navigation.StudentProfileDestination
 
 /**
  * Models the navigation top level destinations in the app,
@@ -42,16 +48,26 @@ data class StudentHomeTopLevelDestination(
 )
 
 val STUDENT_HOME_TOP_LEVEL_DESTINATIONS = listOf(
-/*    LenBetaScreen.StudentHomeSections.StudentDashboard,
-    LenBetaScreen.StudentHomeSections.StudentProfile,*/
     StudentHomeTopLevelDestination(
-        route = "${StudentHomeDestination.route}/{${StudentHomeDestination.dashboard}}",
+        route = StudentDashboardDestination.route,
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         iconTextId = home
     ),
     StudentHomeTopLevelDestination(
-        route = "${StudentHomeDestination.route}/{${StudentHomeDestination.profile}}",
+        route = ExploreDestination.route,
+        selectedIcon = Icons.Filled.Explore,
+        unselectedIcon = Icons.Outlined.Explore,
+        iconTextId = explore
+    ),
+    StudentHomeTopLevelDestination(
+        route = PeersDestination.route,
+        selectedIcon = Icons.Filled.People,
+        unselectedIcon = Icons.Outlined.People,
+        iconTextId = peers
+    ),
+    StudentHomeTopLevelDestination(
+        route = StudentProfileDestination.route,
         selectedIcon = Icons.Filled.Person,
         unselectedIcon = Icons.Outlined.Person,
         iconTextId = profile

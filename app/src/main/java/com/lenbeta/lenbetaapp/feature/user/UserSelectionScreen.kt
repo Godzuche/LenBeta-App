@@ -1,4 +1,4 @@
-package com.lenbeta.lenbetaapp.feature
+package com.lenbeta.lenbetaapp.feature.user
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.*
@@ -19,28 +19,40 @@ fun UsersRoute(
     onTeacherSelected: () -> Unit,
     onStudentSelected: () -> Unit
 ) {
-    LenBetaAppTheme() {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(all = 16.dp)
-                .wrapContentSize(Alignment.Center)
-                .then(modifier)
-        ) {
-            Text(text = "I am a...")
-            Spacer(modifier = Modifier.height(16.dp))
-            UserSelectionButton(
-                text = R.string.bt_teacher,
-                onButtonClick = onTeacherSelected
-            )
-            UserSelectionButton(
-                text = R.string.bt_student,
-                onButtonClick = onStudentSelected
-            )
-        }
+    UsersScreen(
+        onTeacherSelected = onTeacherSelected,
+        onStudentSelected = onStudentSelected,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun UsersScreen(
+    onTeacherSelected: () -> Unit,
+    onStudentSelected: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(all = 16.dp)
+            .wrapContentSize(Alignment.Center)
+            .then(modifier)
+    ) {
+        Text(text = "I am a...")
+        Spacer(modifier = Modifier.height(16.dp))
+        UserSelectionButton(
+            text = R.string.bt_teacher,
+            onButtonClick = onTeacherSelected
+        )
+        UserSelectionButton(
+            text = R.string.bt_student,
+            onButtonClick = onStudentSelected
+        )
     }
+
 }
 
 @Composable
@@ -59,7 +71,7 @@ fun UserSelectionButton(
 @Composable
 fun UserSelectionPreview() {
     LenBetaAppTheme() {
-        UsersRoute(
+        UsersScreen(
             onStudentSelected = {},
             onTeacherSelected = {}
         )

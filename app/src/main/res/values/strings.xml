@@ -18,4 +18,6 @@
     <string name="name">Name</string>
     <string name="profile">My Profile</string>
     <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="peers">Peers</string>
 </resources>

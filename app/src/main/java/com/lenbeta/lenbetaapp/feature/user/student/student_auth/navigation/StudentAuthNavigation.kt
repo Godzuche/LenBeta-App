@@ -5,9 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.lenbeta.lenbetaapp.core.navigation.LenBetaNavigationDestination
-import com.lenbeta.lenbetaapp.feature.student.student_auth.StudentSignInRoute
+import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in.StudentSignInRoute
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_up.StudentSignUpRoute
-import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
 
 object StudentAuthDestination : LenBetaNavigationDestination {
     override val route = "student_auth_route"

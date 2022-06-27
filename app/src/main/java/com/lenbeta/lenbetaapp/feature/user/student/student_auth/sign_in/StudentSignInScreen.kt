@@ -1,4 +1,4 @@
-package com.lenbeta.lenbetaapp.feature.student.student_auth
+package com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme

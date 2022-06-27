@@ -14,8 +14,8 @@ import com.lenbeta.lenbetaapp.feature.onboarding.OnBoardingViewModel
 import com.lenbeta.lenbetaapp.feature.onboarding.navigation.onboardingGraph
 import com.lenbeta.lenbetaapp.feature.user.navigation.UserDestination
 import com.lenbeta.lenbetaapp.feature.user.navigation.userGraph
-import com.lenbeta.lenbetaapp.feature.user.student.home.StudentHomeDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.studentHomeGraph
+import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.StudentHomeDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.studentHomeGraph
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.StudentAuthDestination
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.studentAuthGraph
 import com.lenbeta.lenbetaapp.feature.user.teacher.TeacherSignInScreen

@@ -14,7 +14,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.lenbeta.lenbetaapp.feature.user.student.home.StudentHomeDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.dashboard.navigation.StudentDashboardDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.explore.navigation.ExploreDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.peers.navigation.PeersDestination
+import com.lenbeta.lenbetaapp.feature.user.student.home.profile.navigation.StudentProfileDestination
 import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
 import kotlinx.coroutines.CoroutineScope
 
@@ -79,8 +82,10 @@ class LenBetaAppState(
     )
     private val bottomBarRoutes = bottomBarTabs.map { it.route }*/
     private val bottomBarRoutes = listOf(
-        "${StudentHomeDestination.route}/{${StudentHomeDestination.dashboard}}",
-        "${StudentHomeDestination.route}/{${StudentHomeDestination.profile}}"
+        StudentDashboardDestination.route,
+        ExploreDestination.route,
+        PeersDestination.route,
+        StudentProfileDestination.route
     )
 
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.

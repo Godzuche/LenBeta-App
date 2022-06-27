@@ -22,10 +22,12 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.feature.util.*
+import com.lenbeta.lenbetaapp.feature.util.DetailTextField
+import com.lenbeta.lenbetaapp.feature.util.ExistingAccountSignInButton
+import com.lenbeta.lenbetaapp.feature.util.PasswordTextField
+import com.lenbeta.lenbetaapp.feature.util.SignUpButton
 
 @ExperimentalMaterial3Api
 @Composable
