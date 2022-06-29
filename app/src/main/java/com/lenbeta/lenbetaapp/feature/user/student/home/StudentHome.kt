@@ -1,5 +1,6 @@
 package com.lenbeta.lenbetaapp.feature.user.student.home
 
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -57,7 +58,7 @@ fun StudentBottomBar(
                 label = { Text(text = stringResource(destination.iconTextId)) },
                 alwaysShowLabel = false
             )
-            /*BottomNavigationItem(
+ /*           BottomNavigationItem(
                 selected = selected,
                 onClick = {onNavigateToStudentHomeTopDestination(destination)},
                 icon = {

@@ -12,7 +12,6 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.R.string.*
 import com.lenbeta.lenbetaapp.feature.user.student.home.dashboard.navigation.StudentDashboardDestination
 import com.lenbeta.lenbetaapp.feature.user.student.home.explore.navigation.ExploreDestination
@@ -70,6 +69,6 @@ val STUDENT_HOME_TOP_LEVEL_DESTINATIONS = listOf(
         route = StudentProfileDestination.route,
         selectedIcon = Icons.Filled.Person,
         unselectedIcon = Icons.Outlined.Person,
-        iconTextId = profile
+        iconTextId = my_profile
     )
 )

@@ -2,7 +2,9 @@ package com.lenbeta.lenbetaapp.feature.user.student.home.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
@@ -20,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.lenbeta.lenbetaapp.R
@@ -49,7 +52,9 @@ fun ProfileSectionCard(title: Int, value: String, modifier: Modifier = Modifier)
             .then(modifier)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Column(
@@ -68,17 +73,21 @@ fun ProfileSectionCard(title: Int, value: String, modifier: Modifier = Modifier)
                     Text(
                         text = value,
                         style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp
                     )
                 }
             }
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterEnd)
-            )
+            OutlinedIconButton(
+                onClick = {},
+                modifier = Modifier.align(Alignment.CenterEnd),
+                border = null
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ChevronRight,
+                    contentDescription = null
+                )
+            }
         }
     }
 }
@@ -90,15 +99,33 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
         modifier = Modifier
             .fillMaxSize()
             .then(modifier)
+            .verticalScroll(state = rememberScrollState())
+
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         ProfileHeader()
         Spacer(modifier = Modifier.height(16.dp))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
-            ProfileSectionCard(title = R.string.name, value = "God'swill Jonathan")
+            ProfileSectionCard(
+                title = R.string.name,
+                value = "God'swill Jonathan"
+            )
+            ProfileSectionCard(
+                title = R.string.student_email,
+                value = "Godswill.jonathan@ust.edu.ng"
+            )
+            ProfileSectionCard(
+                title = R.string.engineering,
+                value = "Chemical/Petrochemical Engineering"
+            )
+            ProfileSectionCard(
+                title = R.string.level,
+                value = "400L"
+            )
         }
     }
 }

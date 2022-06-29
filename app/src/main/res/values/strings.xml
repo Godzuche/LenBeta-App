@@ -15,9 +15,12 @@
     <string name="dummy_text">Lorem ipsum dolor sit amet, consectetur edipicing elit, sed do eiusmod.</string>
     <string name="communication">Communication</string>
     <string name="my_profile">My Profile</string>
-    <string name="name">Name</string>
-    <string name="profile">My Profile</string>
+    <string name="name">Name:</string>
+    <string name="profile">Profile</string>
     <string name="home">Home</string>
     <string name="explore">Explore</string>
     <string name="peers">Peers</string>
+    <string name="student_email">Student email:</string>
+    <string name="engineering">Engineering</string>
+    <string name="level">Level:</string>
 </resources>

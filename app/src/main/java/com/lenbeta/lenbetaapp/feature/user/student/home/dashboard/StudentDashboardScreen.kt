@@ -10,10 +10,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,14 +72,15 @@ fun StudentDashboardTopBar(
             ) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
-                        text = "Hello there,",
-                        fontSize = 16.sp
+                        text = "Hello there 👋,",
+                        fontSize = 14.sp
                     )
                 }
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                     Text(
                         text = username,
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }
@@ -95,6 +98,6 @@ fun StudentDashboardTopBar(
 @Composable
 fun StudentHomePreview() {
     LenBetaAppTheme {
-        StudentDashboardScreen()
+        StudentDashboardRoute(rememberNavController())
     }
 }
