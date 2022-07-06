@@ -1,6 +1,5 @@
 package com.lenbeta.lenbetaapp.feature.user.student.home
 
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -58,22 +57,22 @@ fun StudentBottomBar(
                 label = { Text(text = stringResource(destination.iconTextId)) },
                 alwaysShowLabel = false
             )
- /*           BottomNavigationItem(
-                selected = selected,
-                onClick = {onNavigateToStudentHomeTopDestination(destination)},
-                icon = {
-                    Icon(
-                        imageVector = if (selected) {
-                            destination.selectedIcon
-                        } else {
-                            destination.unselectedIcon
-                        },
-                        contentDescription = null
-                    )
-                },
-                label = { Text(text = stringResource(destination.iconTextId)) },
-                alwaysShowLabel = false
-            )*/
+            /*           BottomNavigationItem(
+                           selected = selected,
+                           onClick = {onNavigateToStudentHomeTopDestination(destination)},
+                           icon = {
+                               Icon(
+                                   imageVector = if (selected) {
+                                       destination.selectedIcon
+                                   } else {
+                                       destination.unselectedIcon
+                                   },
+                                   contentDescription = null
+                               )
+                           },
+                           label = { Text(text = stringResource(destination.iconTextId)) },
+                           alwaysShowLabel = false
+                       )*/
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.lenbeta.lenbetaapp.feature.user.student.home.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
@@ -104,7 +106,7 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         ProfileHeader()
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -130,6 +132,7 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileHeader(modifier: Modifier = Modifier) {
     Column(
@@ -141,26 +144,34 @@ fun ProfileHeader(modifier: Modifier = Modifier) {
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_launcher_background),
+                painter = painterResource(R.drawable.avatar),
                 contentDescription = "Profile picture",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(140.dp)
+                    .size(156.dp)
                     .clip(CircleShape)
             )
-            IconButton(
-                onClick = {},
+            Box(
                 modifier = Modifier
+                    .clip(RoundedCornerShape(100))
                     .align(Alignment.BottomEnd)
-                    .clip(CircleShape),
-                colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.background
-                )
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(1.dp)
+
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = "Edit button"
-                )
+                FilledIconButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd),
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit button"
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -174,7 +185,7 @@ fun ProfileHeader(modifier: Modifier = Modifier) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = "godswill.jonathan@ust.edu.ng",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleSmall
             )
         }
     }
