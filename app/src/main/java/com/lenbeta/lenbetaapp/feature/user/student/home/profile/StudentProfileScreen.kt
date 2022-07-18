@@ -46,7 +46,6 @@ import coil.size.Size
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
 import com.lenbeta.lenbetaapp.feature.util.CenteredSmallTopBar
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,6 +68,7 @@ fun ProfileSectionCard(title: Int, value: String, modifier: Modifier = Modifier)
     Card(
         onClick = {},
         modifier = Modifier
+            .height(72.dp)
             .then(modifier)
     ) {
         Box(
@@ -117,18 +117,19 @@ fun ProfileSectionCard(title: Int, value: String, modifier: Modifier = Modifier)
 fun ProfileSectionExpandableCard(
     title: Int,
     items: List<String>,
-    modifier: Modifier = Modifier,
-    listState: LazyListState
+    listState: LazyListState,
+    modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
-    var isExpanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
     Card(
         onClick = {
-            isExpanded = !isExpanded
-            if (isExpanded) {
+            expanded = !expanded
+            if (expanded) {
                 scope.launch {
-                    delay(100)
-                    listState.animateScrollToItem(7)
+                    listState.animateScrollToItem(
+                        listState.layoutInfo.visibleItemsInfo.lastIndex
+                    )
                 }
             }
         },
@@ -143,7 +144,7 @@ fun ProfileSectionExpandableCard(
         ) {
             Column(
                 modifier = Modifier
-                    .wrapContentHeight()
+                    .height(56.dp)
                     .padding(horizontal = 16.dp)
                     .animateContentSize(),
                 verticalArrangement = Arrangement.SpaceEvenly
@@ -164,7 +165,7 @@ fun ProfileSectionExpandableCard(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isExpanded,
+                        visible = expanded,
                         enter = expandVertically(
                             animationSpec = spring(
                                 dampingRatio = Spring.DampingRatioMediumBouncy,
@@ -182,12 +183,11 @@ fun ProfileSectionExpandableCard(
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier
                                 .wrapContentHeight()
-//                                .animateContentSize()
                         ) {
                             for (index in 1 until items.size) {
                                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                                     Text(
-                                        text = items[index],
+                                        text = items.elementAt(index),
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontWeight = FontWeight.SemiBold,
                                         fontSize = 16.sp
@@ -199,12 +199,12 @@ fun ProfileSectionExpandableCard(
                 }
             }
             OutlinedIconButton(
-                onClick = { isExpanded = !isExpanded },
+                onClick = { expanded = !expanded },
                 modifier = Modifier.align(Alignment.TopEnd),
                 border = null
             ) {
                 Icon(
-                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                     contentDescription = null
                 )
             }
@@ -269,9 +269,9 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
                 listState = listState
             )
         }
-        item(7) {
+        /*item(7) {
             Spacer(modifier = Modifier.height(16.dp))
-        }
+        }*/
     }
 }
 

@@ -20,12 +20,12 @@ import com.lenbeta.lenbetaapp.navigation.StudentHomeTopLevelDestination
 fun SetUpTopBar(currentDestination: NavDestination?, navHostController: NavHostController) {
     when {
         currentDestination?.hierarchy?.any {
-            it.route == LenBetaScreen.StudentHomeSections.StudentDashboard.route
+            it.route == LenBetaScreen.StudentHomeTopLevels.StudentDashboard.route
         } == true -> {
             StudentDashboardTopBar()
         }
         currentDestination?.hierarchy?.any {
-            it.route == LenBetaScreen.StudentHomeSections.StudentProfile.route
+            it.route == LenBetaScreen.StudentHomeTopLevels.StudentProfile.route
         } == true -> {
             CenteredSmallTopBar(title = R.string.my_profile, navController = navHostController)
         }
@@ -57,22 +57,6 @@ fun StudentBottomBar(
                 label = { Text(text = stringResource(destination.iconTextId)) },
                 alwaysShowLabel = false
             )
-            /*           BottomNavigationItem(
-                           selected = selected,
-                           onClick = {onNavigateToStudentHomeTopDestination(destination)},
-                           icon = {
-                               Icon(
-                                   imageVector = if (selected) {
-                                       destination.selectedIcon
-                                   } else {
-                                       destination.unselectedIcon
-                                   },
-                                   contentDescription = null
-                               )
-                           },
-                           label = { Text(text = stringResource(destination.iconTextId)) },
-                           alwaysShowLabel = false
-                       )*/
         }
     }
 }

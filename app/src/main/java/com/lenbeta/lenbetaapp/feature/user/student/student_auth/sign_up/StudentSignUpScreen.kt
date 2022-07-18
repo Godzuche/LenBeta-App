@@ -5,6 +5,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Login
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,10 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.feature.util.DetailTextField
-import com.lenbeta.lenbetaapp.feature.util.ExistingAccountSignInButton
-import com.lenbeta.lenbetaapp.feature.util.PasswordTextField
-import com.lenbeta.lenbetaapp.feature.util.SignUpButton
+import com.lenbeta.lenbetaapp.feature.util.*
 
 @ExperimentalMaterial3Api
 @Composable
@@ -128,13 +127,15 @@ fun StudentSignUpScreen(
             onValueChange = { confirmPassword = it }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        ExistingAccountSignInButton(
+        AuthTextButton(
             text = R.string.already_have_an_account,
+            action = R.string.sign_in,
+            icon = Icons.Filled.Login,
             onClick = navigateToSignIn
         )
-        SignUpButton(
+        AuthButton(
             text = R.string.sign_up,
-            onSignUpClick = navigateToHome
+            onClick = navigateToHome
         )
     }
 }

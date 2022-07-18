@@ -6,32 +6,36 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.lenbeta.lenbetaapp.core.navigation.LenBetaNavigationDestination
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in.StudentSignInRoute
+import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in.navigation.StudentSignInNavigation
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_up.StudentSignUpRoute
+import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_up.navigation.StudentSignUpNavigation
 
 object StudentAuthDestination : LenBetaNavigationDestination {
     override val route = "student_auth_route"
-    override val destination = "student_auth_destination"
-    const val signIn = "signIn"
-    const val signUp = "signUp"
+    override val destination = StudentSignInNavigation.route
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.studentAuthGraph(
     navigateToHome: () -> Unit,
-    navigateToSignIn: () -> Unit
+    navigateToSignIn: () -> Unit,
+    navigateToSignUp: () -> Unit
 ) {
     navigation(
         route = StudentAuthDestination.route,
-        startDestination = "${StudentAuthDestination.route}/{${StudentAuthDestination.signUp}}"
+        startDestination = StudentAuthDestination.destination
     ) {
-        composable(route = "${StudentAuthDestination.route}/{${StudentAuthDestination.signUp}}") {
+        composable(route = StudentSignUpNavigation.route) {
             StudentSignUpRoute(
                 navigateToHome = navigateToHome,
                 navigateToSignIn = navigateToSignIn
             )
         }
-        composable(route = "${StudentAuthDestination.route}/{${StudentAuthDestination.signIn}}") {
-            StudentSignInRoute()
+        composable(route = StudentSignInNavigation.route) {
+            StudentSignInRoute(
+                navigateToHome = navigateToHome,
+                navigateToSignUp = navigateToSignUp
+            )
         }
     }
 }

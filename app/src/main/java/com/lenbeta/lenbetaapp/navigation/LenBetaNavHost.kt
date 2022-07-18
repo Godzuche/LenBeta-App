@@ -18,6 +18,8 @@ import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.StudentHomeDe
 import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.studentHomeGraph
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.StudentAuthDestination
 import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.studentAuthGraph
+import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in.navigation.StudentSignInNavigation
+import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_up.navigation.StudentSignUpNavigation
 import com.lenbeta.lenbetaapp.feature.user.teacher.TeacherSignInScreen
 import com.lenbeta.lenbetaapp.feature.user.teacher.TeacherSignUpScreen
 import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
@@ -56,7 +58,11 @@ fun LenBetaNavHost(
                     },
                     navigateToSignIn = {
                         navController
-                            .navigate(route = "${StudentAuthDestination.route}/{${StudentAuthDestination.signIn}}")
+                            .navigate(route = StudentSignInNavigation.route)
+                    },
+                    navigateToSignUp = {
+                        navController
+                            .navigate(route = StudentSignUpNavigation.route)
                     }
                 )
 //                teacherAuthGraph()

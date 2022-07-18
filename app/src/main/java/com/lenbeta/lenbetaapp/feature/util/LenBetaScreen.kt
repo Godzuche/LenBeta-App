@@ -10,11 +10,11 @@ sealed class LenBetaScreen(open val route: String, @StringRes open val resourceI
     object StudentSignUp : LenBetaScreen(route = "student_sign_up_screen")
     object TeacherSignUp : LenBetaScreen(route = "teacher_sign_up_screen")
     object TeacherSignIn : LenBetaScreen(route = "teacher_sign_in_screen")
-    sealed class StudentHomeSections(
+    sealed class StudentHomeTopLevels(
         override val route: String,
         @StringRes override val resourceId: Int? = null
     ) : LenBetaScreen(route, resourceId) {
-        object StudentDashboard : StudentHomeSections(route = "student_dashboard", R.string.home)
-        object StudentProfile : StudentHomeSections(route = "student_profile", R.string.profile)
+        object StudentDashboard : StudentHomeTopLevels(route = "student_dashboard", R.string.home)
+        object StudentProfile : StudentHomeTopLevels(route = "student_profile", R.string.profile)
     }
 }

@@ -103,8 +103,8 @@ class LenBetaAppState(
         LenBetaScreen.StudentSignUp,
         LenBetaScreen.TeacherSignUp,
         LenBetaScreen.TeacherSignIn,
-        LenBetaScreen.StudentHomeSections.StudentDashboard,
-        LenBetaScreen.StudentHomeSections.StudentProfile
+        LenBetaScreen.StudentHomeTopLevels.StudentDashboard,
+        LenBetaScreen.StudentHomeTopLevels.StudentProfile
     )
 
     val topBarEnabledRoutes = topBarEnabledScreens.map { it.route }

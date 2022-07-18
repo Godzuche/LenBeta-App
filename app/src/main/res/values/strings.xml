@@ -24,4 +24,10 @@
     <string name="engineering">Engineering</string>
     <string name="level">Level</string>
     <string name="skills">Skills</string>
+    <string name="i_am_a">I am a...</string>
+    <string name="new_user">New to LenBeta?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="db_search_hint">Find course or tutor</string>
+    <string name="search">Search</string>
+    <string name="live_classes">Live classes</string>
 </resources>

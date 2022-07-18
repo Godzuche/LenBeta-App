@@ -41,7 +41,7 @@ fun UsersScreen(
             .wrapContentSize(Alignment.Center)
             .then(modifier)
     ) {
-        Text(text = "I am a...")
+        Text(text = stringResource(R.string.i_am_a))
         Spacer(modifier = Modifier.height(16.dp))
         UserSelectionButton(
             text = R.string.bt_teacher,

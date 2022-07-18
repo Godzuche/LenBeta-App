@@ -5,6 +5,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Login
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -129,12 +131,14 @@ fun TeacherSignUpScreenContent(modifier: Modifier = Modifier, navController: Nav
             onValueChange = { confirmPassword = it }
         )
         Spacer(modifier = Modifier.height(8.dp))
-        ExistingAccountSignInButton(
+        AuthTextButton(
             text = R.string.already_have_an_account,
+            action = R.string.sign_in,
+            icon = Icons.Filled.Login,
             onClick = { navController.navigate(LenBetaScreen.TeacherSignIn.route) }
         )
-        SignUpButton(
-            text = R.string.sign_up, onSignUpClick = {
+        AuthButton(
+            text = R.string.sign_up, onClick = {
             }
         )
     }
