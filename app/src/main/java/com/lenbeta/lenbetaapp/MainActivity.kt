@@ -30,9 +30,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             LenBetaAppTheme {
                 val startScreen by splashViewModel.startDestination
-                LenBetaApp(
-                    startDestination = startScreen
-                )
+                startScreen?.let {
+                    LenBetaApp(
+                        startDestination = it
+                    )
+                }
             }
         }
     }

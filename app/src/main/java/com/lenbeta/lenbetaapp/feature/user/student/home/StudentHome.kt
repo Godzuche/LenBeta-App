@@ -22,7 +22,7 @@ fun SetUpTopBar(currentDestination: NavDestination?, navHostController: NavHostC
         currentDestination?.hierarchy?.any {
             it.route == LenBetaScreen.StudentHomeTopLevels.StudentDashboard.route
         } == true -> {
-            StudentDashboardTopBar()
+//            StudentDashboardTopBar(scrollBehavior = scrollBehavior)
         }
         currentDestination?.hierarchy?.any {
             it.route == LenBetaScreen.StudentHomeTopLevels.StudentProfile.route

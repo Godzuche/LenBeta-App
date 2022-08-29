@@ -1,5 +1,6 @@
 package com.lenbeta.lenbetaapp.feature
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -19,8 +20,8 @@ class SplashViewModel @Inject constructor(
     private val _isLoading = mutableStateOf(true)
     val isLoading: State<Boolean> = _isLoading
 
-    private val _startDestination = mutableStateOf(OnboardingDestination.route)
-    val startDestination: State<String> = _startDestination
+    private val _startDestination: MutableState<String?> = mutableStateOf(null)
+    val startDestination: State<String?> = _startDestination
 
     init {
         viewModelScope.launch {
