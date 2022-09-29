@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
 
     //    @Inject
 //    lateinit var splashViewModel: SplashViewModel
-    val splashViewModel: SplashViewModel by viewModels()
+    private val splashViewModel: SplashViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

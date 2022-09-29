@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,20 +19,19 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.LibraryBooks
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AccessTime
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Timelapse
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -53,7 +51,7 @@ import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentDashboardRoute(navController: NavHostController) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarScrollState())
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
@@ -304,6 +302,7 @@ fun StudentHomeSection(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     hint: Int,
@@ -388,13 +387,15 @@ fun SearchBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StudentDashboardTopBar(
     modifier: Modifier = Modifier,
     username: String = "God'swill Jonathan",
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    SmallTopAppBar(
+    TopAppBar(
+        modifier = modifier,
         navigationIcon = {
             IconButton(
                 onClick = {},
@@ -426,7 +427,6 @@ fun StudentDashboardTopBar(
                 }
             }
         },
-        modifier = modifier,
         actions = {
             IconButton(onClick = {}) {
                 Icon(imageVector = Icons.Outlined.Notifications, contentDescription = null)

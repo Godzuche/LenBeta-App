@@ -275,7 +275,6 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileHeader(modifier: Modifier = Modifier) {
     Column(
@@ -301,7 +300,6 @@ fun ProfileHeader(modifier: Modifier = Modifier) {
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 private fun ProfileImage(modifier: Modifier) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)

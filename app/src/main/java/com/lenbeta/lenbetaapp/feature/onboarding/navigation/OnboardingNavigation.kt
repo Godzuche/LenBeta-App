@@ -7,7 +7,7 @@ import com.lenbeta.lenbetaapp.feature.onboarding.OnboardingRoute
 
 object OnboardingDestination : LenBetaNavigationDestination {
     override val route = "onboarding_route"
-    override val destination = "onboarding_navigation"
+    override val destination = "onboarding_destination"
 }
 
 fun NavGraphBuilder.onboardingGraph(
