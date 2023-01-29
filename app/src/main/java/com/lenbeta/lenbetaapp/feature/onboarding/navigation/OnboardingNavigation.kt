@@ -2,18 +2,14 @@ package com.lenbeta.lenbetaapp.feature.onboarding.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.lenbeta.lenbetaapp.core.navigation.LenBetaNavigationDestination
 import com.lenbeta.lenbetaapp.feature.onboarding.OnboardingRoute
 
-object OnboardingDestination : LenBetaNavigationDestination {
-    override val route = "onboarding_route"
-    override val destination = "onboarding_destination"
-}
+const val onboardingRoute = "onboarding_route"
 
-fun NavGraphBuilder.onboardingGraph(
+fun NavGraphBuilder.onboardingScreen(
     onOnboardingFinish: () -> Unit
 ) {
-    composable(route = OnboardingDestination.route) {
+    composable(route = onboardingRoute) {
         OnboardingRoute(onOnboardingFinish = onOnboardingFinish)
     }
 }

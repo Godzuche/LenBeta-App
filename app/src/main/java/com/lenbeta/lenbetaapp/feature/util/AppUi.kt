@@ -4,16 +4,18 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SmallTopBar(
     @StringRes title: Int,
     navController: NavHostController
 ) {
-    SmallTopAppBar(
+    TopAppBar(
         title = {
             Text(text = stringResource(title))
         },
@@ -27,16 +29,17 @@ fun SmallTopBar(
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+        colors = topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
         )
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CenteredSmallTopBar(
     @StringRes title: Int,
-    navController: NavHostController,
+    onNavigateUp: () -> Unit,
     isTopLevel: Boolean = true
 ) {
     CenterAlignedTopAppBar(
@@ -46,7 +49,7 @@ fun CenteredSmallTopBar(
         navigationIcon = {
             if (!isTopLevel) {
                 IconButton(
-                    onClick = { navController.navigateUp() }
+                    onClick = onNavigateUp
                 ) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
@@ -55,7 +58,7 @@ fun CenteredSmallTopBar(
                 }
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         )
     )

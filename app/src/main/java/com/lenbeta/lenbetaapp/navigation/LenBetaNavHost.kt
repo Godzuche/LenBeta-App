@@ -1,6 +1,5 @@
 package com.lenbeta.lenbetaapp.navigation
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -10,28 +9,28 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.lenbeta.lenbetaapp.feature.auth.navigation.userAuthGraph
+import com.lenbeta.lenbetaapp.feature.auth.navigation.usersAuthRoute
+import com.lenbeta.lenbetaapp.feature.auth.student_auth.navigation.studentAuthGraph
+import com.lenbeta.lenbetaapp.feature.auth.student_auth.navigation.studentAuthGraphRoute
+import com.lenbeta.lenbetaapp.feature.auth.student_auth.sign_in.navigation.studentSignInRoute
+import com.lenbeta.lenbetaapp.feature.auth.student_auth.sign_up.navigation.studentSignUpRoute
+import com.lenbeta.lenbetaapp.feature.auth.teacher_auth.TeacherSignInScreen
+import com.lenbeta.lenbetaapp.feature.auth.teacher_auth.TeacherSignUpScreen
+import com.lenbeta.lenbetaapp.feature.home.student.navigation.studentHomeGraph
+import com.lenbeta.lenbetaapp.feature.home.student.navigation.studentHomeRoute
 import com.lenbeta.lenbetaapp.feature.onboarding.OnBoardingViewModel
-import com.lenbeta.lenbetaapp.feature.onboarding.navigation.onboardingGraph
-import com.lenbeta.lenbetaapp.feature.user.navigation.UserDestination
-import com.lenbeta.lenbetaapp.feature.user.navigation.userGraph
-import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.StudentHomeDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.navigation.studentHomeGraph
-import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.StudentAuthDestination
-import com.lenbeta.lenbetaapp.feature.user.student.student_auth.navigation.studentAuthGraph
-import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_in.navigation.StudentSignInNavigation
-import com.lenbeta.lenbetaapp.feature.user.student.student_auth.sign_up.navigation.StudentSignUpNavigation
-import com.lenbeta.lenbetaapp.feature.user.teacher.TeacherSignInScreen
-import com.lenbeta.lenbetaapp.feature.user.teacher.TeacherSignUpScreen
+import com.lenbeta.lenbetaapp.feature.onboarding.navigation.onboardingScreen
 import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
 
 
 //@Composable
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LenBetaNavHost(
-    modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = UserDestination.route
+//    onBackClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    startDestination: String = usersAuthRoute
 ) {
     val onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
     NavHost(
@@ -39,64 +38,39 @@ fun LenBetaNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        onboardingGraph(
+        onboardingScreen(
             onOnboardingFinish = {
                 onBoardingViewModel.saveOnboardingState(completed = true)
-                navController.navigate(UserDestination.route) {
+                navController.navigate(usersAuthRoute) {
                     popUpTo(navController.graph.findStartDestination().id)
                 }
             }
         )
-        userGraph(
+        userAuthGraph(
             navigateToTeacher = { },
-            navigateToStudent = { navController.navigate(StudentAuthDestination.route) },
+            navigateToStudent = { navController.navigate(studentAuthGraphRoute) },
             nestedGraphs = {
                 studentAuthGraph(
                     navigateToHome = {
-                        navController
-                            .navigate(StudentHomeDestination.route)
+                        navController.navigate(studentHomeRoute)
                     },
                     navigateToSignIn = {
-                        navController
-                            .navigate(route = StudentSignInNavigation.route)
+                        navController.navigate(route = studentSignInRoute)
                     },
                     navigateToSignUp = {
-                        navController
-                            .navigate(route = StudentSignUpNavigation.route)
+                        navController.navigate(route = studentSignUpRoute)
                     }
                 )
 //                teacherAuthGraph()
             }
         )
-        studentHomeGraph(navController)
-        /*composable(route = LenBetaScreen.Welcome.route) {
-            WelcomeScreen(navController = navController) *//*{
-            onBoardingViewModel.saveOnboardingState(completed = true)
-            navController.navigate(
-                LenBetaScreen.UserSelection.route,
-                NavOptions.Builder()
-                    .setPopUpTo(LenBetaScreen.UserSelection.route, inclusive = true).build()
-            )
-        }*//*
-        }*/
-        /* composable(route = LenBetaScreen.UserSelection.route) {
-             UsersRoute(
-                 onTeacherSelected = { navController.navigate(LenBetaScreen.TeacherSignUp.route) },
-                 onStudentSelected = { navController.navigate(LenBetaScreen.StudentSignUp.route) }
-             )
-         }
-         composable(route = LenBetaScreen.StudentSignUp.route) {
-             StudentSignUpRoute(navController = navController)
-         }
-         composable(route = LenBetaScreen.StudentSignIn.route) {
-             StudentSignInRoute()
-         }
-         addTeacherAuthGraph(navController)
-         addStudentHomeGraph(navController)*/
+        studentHomeGraph(
+            onNavigateUp = { navController.navigateUp() }
+        )
     }
 }
 
-fun NavGraphBuilder.addTeacherAuthGraph(navController: NavHostController) {
+fun NavGraphBuilder.teacherAuthGraph(navController: NavHostController) {
     navigation(startDestination = LenBetaScreen.TeacherSignUp.route, route = "teacher_auth") {
         composable(route = LenBetaScreen.TeacherSignUp.route) {
             TeacherSignUpScreen(navController = navController)

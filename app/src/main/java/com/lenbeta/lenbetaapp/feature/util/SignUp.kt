@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailTextField(
     value: String,
@@ -49,6 +50,7 @@ fun DetailTextField(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordTextField(
     value: String,

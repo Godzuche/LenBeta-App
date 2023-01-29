@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.lenbeta.lenbetaapp.R.string.*
-import com.lenbeta.lenbetaapp.feature.user.student.home.dashboard.navigation.StudentDashboardDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.explore.navigation.ExploreDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.peers.navigation.PeersDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.profile.navigation.StudentProfileDestination
+import com.lenbeta.lenbetaapp.feature.home.student.dashboard.navigation.studentDashboardRoute
+import com.lenbeta.lenbetaapp.feature.home.student.explore.navigation.exploreRoute
+import com.lenbeta.lenbetaapp.feature.home.student.peers.navigation.peersRoute
+import com.lenbeta.lenbetaapp.feature.home.student.profile.navigation.studentProfileRoute
 
 /**
  * Models the navigation top level destinations in the app,
@@ -48,25 +48,25 @@ data class StudentHomeTopLevelDestination(
 
 val STUDENT_HOME_TOP_LEVEL_DESTINATIONS = listOf(
     StudentHomeTopLevelDestination(
-        route = StudentDashboardDestination.route,
+        route = studentDashboardRoute,
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         iconTextId = home
     ),
     StudentHomeTopLevelDestination(
-        route = ExploreDestination.route,
+        route = exploreRoute,
         selectedIcon = Icons.Filled.Explore,
         unselectedIcon = Icons.Outlined.Explore,
         iconTextId = explore
     ),
     StudentHomeTopLevelDestination(
-        route = PeersDestination.route,
+        route = peersRoute,
         selectedIcon = Icons.Filled.People,
         unselectedIcon = Icons.Outlined.People,
         iconTextId = peers
     ),
     StudentHomeTopLevelDestination(
-        route = StudentProfileDestination.route,
+        route = studentProfileRoute,
         selectedIcon = Icons.Filled.Person,
         unselectedIcon = Icons.Outlined.Person,
         iconTextId = my_profile

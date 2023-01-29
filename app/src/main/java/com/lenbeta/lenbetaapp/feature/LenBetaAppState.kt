@@ -14,10 +14,10 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.lenbeta.lenbetaapp.feature.user.student.home.dashboard.navigation.StudentDashboardDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.explore.navigation.ExploreDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.peers.navigation.PeersDestination
-import com.lenbeta.lenbetaapp.feature.user.student.home.profile.navigation.StudentProfileDestination
+import com.lenbeta.lenbetaapp.feature.home.student.dashboard.navigation.studentDashboardRoute
+import com.lenbeta.lenbetaapp.feature.home.student.explore.navigation.exploreRoute
+import com.lenbeta.lenbetaapp.feature.home.student.peers.navigation.peersRoute
+import com.lenbeta.lenbetaapp.feature.home.student.profile.navigation.studentProfileRoute
 import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
 import kotlinx.coroutines.CoroutineScope
 
@@ -44,7 +44,7 @@ fun rememberLenBetaAppState(
     }
 
 /**
- * Responsible for holding state related to [JetsnackApp] and containing UI-related logic.
+ * Responsible for holding state related to [LenBetaApp] and containing UI-related logic.
  */
 @Stable
 class LenBetaAppState(
@@ -82,10 +82,10 @@ class LenBetaAppState(
     )
     private val bottomBarRoutes = bottomBarTabs.map { it.route }*/
     private val bottomBarRoutes = listOf(
-        StudentDashboardDestination.route,
-        ExploreDestination.route,
-        PeersDestination.route,
-        StudentProfileDestination.route
+        studentDashboardRoute,
+        exploreRoute,
+        peersRoute,
+        studentProfileRoute
     )
 
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.

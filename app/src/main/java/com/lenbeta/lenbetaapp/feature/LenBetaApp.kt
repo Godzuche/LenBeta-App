@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.feature.user.student.home.StudentBottomBar
+import com.lenbeta.lenbetaapp.feature.home.StudentBottomBar
 import com.lenbeta.lenbetaapp.navigation.LenBetaNavHost
 import com.lenbeta.lenbetaapp.navigation.StudentHomeTopLevelNavigation
 
