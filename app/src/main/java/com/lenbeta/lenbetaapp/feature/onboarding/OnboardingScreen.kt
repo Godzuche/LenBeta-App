@@ -29,7 +29,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
 
 @Composable
 fun OnboardingRoute(
@@ -257,22 +256,18 @@ fun IndicatorPreview() {
 @Preview(showBackground = true)
 @Composable
 fun OnboardingScreenPreview() {
-    LenBetaAppTheme {
-        OnboardingScreen(
-            onOnboardingFinish = {}
-        )
-    }
+    OnboardingScreen(
+        onOnboardingFinish = {}
+    )
 }
 
 @Preview
 @Composable
 fun FirstPagePreview() {
-    LenBetaAppTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            PagerScreen(onBoardingPage = OnBoardingPage.FirstPage)
-        }
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        PagerScreen(onBoardingPage = OnBoardingPage.FirstPage)
     }
 }

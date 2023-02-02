@@ -1,162 +1,141 @@
 package com.lenbeta.lenbetaapp.feature
 
 import android.content.res.Resources
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.lenbeta.lenbetaapp.feature.home.student.dashboard.navigation.studentDashboardRoute
-import com.lenbeta.lenbetaapp.feature.home.student.explore.navigation.exploreRoute
-import com.lenbeta.lenbetaapp.feature.home.student.peers.navigation.peersRoute
-import com.lenbeta.lenbetaapp.feature.home.student.profile.navigation.studentProfileRoute
-import com.lenbeta.lenbetaapp.feature.util.LenBetaScreen
+import androidx.navigation.navOptions
+import com.lenbeta.lenbetaapp.feature.authentication.navigation.usersAuthRoute
+import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_in.navigation.studentSignInRoute
+import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_up.navigation.studentSignUpRoute
+import com.lenbeta.lenbetaapp.feature.chats.chatsRoute
+import com.lenbeta.lenbetaapp.feature.chats.navigateToChats
+import com.lenbeta.lenbetaapp.feature.connect.navigation.connectRoute
+import com.lenbeta.lenbetaapp.feature.connect.navigation.navigateToConnect
+import com.lenbeta.lenbetaapp.feature.explore.navigation.exploreRoute
+import com.lenbeta.lenbetaapp.feature.explore.navigation.navigateToExplore
+import com.lenbeta.lenbetaapp.feature.home.student.navigation.navigateToStudentHome
+import com.lenbeta.lenbetaapp.feature.home.student.navigation.studentHomeRoute
+import com.lenbeta.lenbetaapp.feature.notifications.navigateToNotifications
+import com.lenbeta.lenbetaapp.feature.notifications.notificationsRoute
+import com.lenbeta.lenbetaapp.feature.profile.navigation.studentProfileRoute
+import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination
+import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination.*
+import com.lenbeta.lenbetaapp.navigation.teacherSignInRoute
+import com.lenbeta.lenbetaapp.navigation.teacherSignUpRoute
 import kotlinx.coroutines.CoroutineScope
 
 
-/**
- * Remembers and creates an instance of [LenBetaAppState]
- */
 @Composable
 fun rememberLenBetaAppState(
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    windowSizeClass: WindowSizeClass,
     navController: NavHostController = rememberNavController(),
-//    snackbarManager: SnackbarManager = SnackbarManager,
-    resources: Resources = resources(),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
-) =
-    remember(scaffoldState, navController, /*snackbarManager,*/ resources, coroutineScope) {
-        LenBetaAppState(
-            scaffoldState,
-            navController,
-            /*snackbarManager, */
-            resources,
-            coroutineScope
-        )
+): LenBetaAppState {
+    return remember(navController, coroutineScope) {
+        LenBetaAppState(navController, coroutineScope)
     }
+}
 
-/**
- * Responsible for holding state related to [LenBetaApp] and containing UI-related logic.
- */
 @Stable
 class LenBetaAppState(
-    val scaffoldState: ScaffoldState,
     val navController: NavHostController,
-/*    private val snackbarManager: SnackbarManager,*/
-    private val resources: Resources,
-    coroutineScope: CoroutineScope
+    val coroutineScope: CoroutineScope
 ) {
-    // Process snackbars coming from SnackbarManager
-/*    init {
-        coroutineScope.launch {
-            snackbarManager.messages.collect { currentMessages ->
-                if (currentMessages.isNotEmpty()) {
-                    val message = currentMessages[0]
-                    val text = resources.getText(message.messageId)
+    val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState().value?.destination
 
-                    // Display the snackbar on the screen. `showSnackbar` is a function
-                    // that suspends until the snackbar disappears from the screen
-                    scaffoldState.snackbarHostState.showSnackbar(text.toString())
-                    // Once the snackbar is gone or dismissed, notify the SnackbarManager
-                    snackbarManager.setMessageShown(message.id)
-                }
-            }
+    val currentTopLevelDestination: StudentTopLevelDestination?
+        @Composable get() = when (currentDestination?.route) {
+            studentHomeRoute -> STUDENT_HOME
+            exploreRoute -> EXPLORE
+            connectRoute -> CONNECT
+            notificationsRoute -> NOTIFICATIONS
+            chatsRoute -> CHATS
+            else -> null
         }
-    }*/
 
-    // ----------------------------------------------------------
-    // BottomBar state source of truth
-    // ----------------------------------------------------------
+    val studentBottomBarTopLevelDestinations: List<StudentTopLevelDestination> =
+        StudentTopLevelDestination.values().toList().dropLast(1)
 
-    /*private val bottomBarTabs = listOf(
-        LenBetaScreen.StudentHomeSections.StudentDashboard,
-        LenBetaScreen.StudentHomeSections.StudentProfile
-    )
-    private val bottomBarRoutes = bottomBarTabs.map { it.route }*/
     private val bottomBarRoutes = listOf(
-        studentDashboardRoute,
+        studentHomeRoute,
         exploreRoute,
-        peersRoute,
-        studentProfileRoute
+        connectRoute,
+        notificationsRoute,
+        chatsRoute
     )
 
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.
     // Not all routes need to show the bottom bar.
     val shouldShowBottomBar: Boolean
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination?.route in bottomBarRoutes
+        @Composable get() = currentDestination?.route in bottomBarRoutes
 
     // ----------------------------------------------------------
     // TopBar state source of truth
     // ----------------------------------------------------------
-
-    val topBarEnabledScreens = listOf(
-        LenBetaScreen.StudentSignIn,
-        LenBetaScreen.StudentSignUp,
-        LenBetaScreen.TeacherSignUp,
-        LenBetaScreen.TeacherSignIn,
-        LenBetaScreen.StudentHomeTopLevels.StudentDashboard,
-        LenBetaScreen.StudentHomeTopLevels.StudentProfile
+    // List of screen routes that show show a top app bar
+    val topBarEnabledRoutes = listOf(
+        studentSignInRoute,
+        studentSignUpRoute,
+        teacherSignUpRoute,
+        teacherSignInRoute,
+        studentHomeRoute,
+        studentProfileRoute,
+        connectRoute,
+        exploreRoute
     )
 
-    val topBarEnabledRoutes = topBarEnabledScreens.map { it.route }
-
     val shouldShowTopBar: Boolean
-        @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination?.route in topBarEnabledRoutes
+        @Composable get() = currentDestination?.route != usersAuthRoute
 
-    // ----------------------------------------------------------
-    // Navigation state source of truth
-    // ----------------------------------------------------------
+    fun navigateToRoute(route: String) {
+        navController.navigate(route)
+    }
 
-    val currentRoute: String?
-        get() = navController.currentDestination?.route
+    fun navigateToTopLevelDestination(studentTopLevelDestination: StudentTopLevelDestination) {
+        val topLevelNavOptions = navOptions {
+            // Pop up to the start destination of the graph to
+            // avoid building up a large stack of destinations
+            // on the back stack as users select items
+            /*popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }*/
+            popUpTo(studentHomeRoute) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when
+            // reselecting the same item
+            launchSingleTop = true
+            // Restore state when reselecting a previously selected item
+            restoreState = true
+        }
 
-    fun upPress() {
+        when (studentTopLevelDestination) {
+            STUDENT_HOME -> navController.navigateToStudentHome(topLevelNavOptions)
+            EXPLORE -> navController.navigateToExplore(topLevelNavOptions)
+            CONNECT -> navController.navigateToConnect(topLevelNavOptions)
+            NOTIFICATIONS -> navController.navigateToNotifications(topLevelNavOptions)
+            CHATS -> navController.navigateToChats(topLevelNavOptions)
+            else -> Unit
+        }
+    }
+
+    fun onNavigateUp() {
         navController.navigateUp()
     }
 
-    fun navigateToBottomBarRoute(route: String) {
-        if (route != currentRoute) {
-            navController.navigate(route) {
-                launchSingleTop = true
-                restoreState = true
-                // Pop up backstack to the first destination and save state. This makes going back
-                // to the start destination when pressing back in any other bottom tab.
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-            }
-        }
+    fun onBackClick() {
+        navController.popBackStack()
     }
 
-/*    fun navigateToSnackDetail(snackId: Long, from: NavBackStackEntry) {
-        // In order to discard duplicated navigation events, we check the Lifecycle
-        if (from.lifecycleIsResumed()) {
-            navController.navigate("${MainDestinations.SNACK_DETAIL_ROUTE}/$snackId")
-        }
-    }*/
 }
-
-/**
- * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
- *
- * This is used to de-duplicate navigation events.
- */
-private fun NavBackStackEntry.lifecycleIsResumed() =
-    this.lifecycle.currentState == Lifecycle.State.RESUMED
-
-private val NavGraph.startDestination: NavDestination?
-    get() = findNode(startDestinationId)
-
 
 /**
  * A composable function that returns the [Resources]. It will be recomposed when `Configuration`

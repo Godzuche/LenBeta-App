@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lenbeta.lenbetaapp.MainActivityUiState.Loading
 import com.lenbeta.lenbetaapp.MainActivityUiState.Success
 import com.lenbeta.lenbetaapp.data.repository.DatastoreRepository
-import com.lenbeta.lenbetaapp.feature.auth.navigation.usersAuthGraphRoute
+import com.lenbeta.lenbetaapp.feature.authentication.navigation.usersAuthGraphRoute
 import com.lenbeta.lenbetaapp.feature.onboarding.navigation.onboardingRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted

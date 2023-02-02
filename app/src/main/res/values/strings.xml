@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LenBeta App</string>
+    <string name="app_name">LenBeta</string>
     <string name="bt_teacher">Teacher</string>
     <string name="bt_student">Student</string>
     <string name="last_name">Last Name</string>
@@ -24,7 +24,7 @@
     <string name="engineering">Engineering</string>
     <string name="level">Level</string>
     <string name="skills">Skills</string>
-    <string name="i_am_a">I am a...</string>
+    <string name="i_am_a">I am a…</string>
     <string name="new_user">New to LenBeta?</string>
     <string name="sign_in">Sign In</string>
     <string name="db_search_hint">Find course or tutor</string>
@@ -33,4 +33,9 @@
     <string name="total_no_of_classes">5 classes today</string>
     <string name="assignments">Assignments</string>
     <string name="view_all">View All</string>
+    <string name="connect">Connect</string>
+    <string name="chats">Chats</string>
+    <string name="notifications">Notifications</string>
+    <string name="users">Users</string>
+    <string name="profile_pic_icon">Profile picture icon</string>
 </resources>

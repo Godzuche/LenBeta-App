@@ -1,52 +1,107 @@
 package com.lenbeta.lenbetaapp.feature
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.lenbeta.lenbetaapp.core.ui.theme.LenBetaAppTheme
-import com.lenbeta.lenbetaapp.feature.home.StudentBottomBar
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import com.lenbeta.lenbetaapp.core.ui.components.LenBetaNavigationBar
+import com.lenbeta.lenbetaapp.core.ui.components.LenBetaNavigationBarItem
+import com.lenbeta.lenbetaapp.core.ui.components.TopBar
+import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcon
+import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_in.navigation.studentSignInRoute
+import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_up.navigation.studentSignUpRoute
+import com.lenbeta.lenbetaapp.feature.profile.navigation.studentProfileRoute
 import com.lenbeta.lenbetaapp.navigation.LenBetaNavHost
-import com.lenbeta.lenbetaapp.navigation.StudentHomeTopLevelNavigation
+import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination
 
 @ExperimentalMaterial3Api
 @Composable
-fun LenBetaApp(startDestination: String) {
-    LenBetaAppTheme {
-        val appState = rememberLenBetaAppState()
-        val lenBetaTopLevelNavigation = remember(appState.navController) {
-            StudentHomeTopLevelNavigation(appState.navController)
-        }
-
-        val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-        Scaffold(
-            topBar = {
-                /*if (appState.shouldShowTopBar) {
-                    val currentScreen = appState.navController
-                        .currentBackStackEntryAsState().value?.destination?.route
-                    appState.topBarEnabledScreensf
-                    CenteredSmallTopBar(title = currentScreen, navController = )
-                }*/
-            },
-            bottomBar = {
-                if (appState.shouldShowBottomBar) {
-                    StudentBottomBar(
-                        onNavigateToStudentHomeTopDestination = lenBetaTopLevelNavigation::navigateTo,
-                        currentDestination = currentDestination
-                    )
-                }
+fun LenBetaApp(
+    startDestination: String,
+    windowSizeClass: WindowSizeClass,
+    appState: LenBetaAppState = rememberLenBetaAppState(windowSizeClass = windowSizeClass)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+        rememberTopAppBarState()
+    )
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopBar(
+                shouldShowTopBar = appState.shouldShowTopBar,
+                topLevelDestination = appState.currentTopLevelDestination,
+                currentDestination = appState.currentDestination,
+                scrollBehavior = scrollBehavior,
+                navigateToProfile = {appState.navigateToRoute(studentProfileRoute)},
+                navigateToSettings = {},
+                navigateUp = {appState.onBackClick()}
+            )
+        },
+        bottomBar = {
+            if (appState.shouldShowBottomBar) {
+                LenBetaBottomBar(
+                    destinations = appState.studentBottomBarTopLevelDestinations,
+                    onNavigateToDestination = appState::navigateToTopLevelDestination,
+                    currentDestination = appState.currentDestination
+                )
             }
-        ) { innerPaddingModifier ->
-            LenBetaNavHost(
-                modifier = Modifier.padding(innerPaddingModifier),
-                navController = appState.navController,
-                startDestination = startDestination
+        }
+    ) { innerPaddingModifier ->
+        LenBetaNavHost(
+            navController = appState.navController,
+            startDestination = startDestination,
+            modifier = Modifier.padding(innerPaddingModifier)
+        )
+    }
+}
+
+@Composable
+fun LenBetaBottomBar(
+    destinations: List<StudentTopLevelDestination>,
+    onNavigateToDestination: (StudentTopLevelDestination) -> Unit,
+    currentDestination: NavDestination?,
+    modifier: Modifier = Modifier
+) {
+    LenBetaNavigationBar(modifier = modifier) {
+        destinations.forEach { destination ->
+            val selected =
+                currentDestination.isStudentTopLevelDestinationInHierarchy(destination)
+            LenBetaNavigationBarItem(
+                selected = selected,
+                onClick = { onNavigateToDestination(destination) },
+                icon = {
+                    val icon =
+                        if (selected) destination.selectedIcon else destination.unselectedIcon
+                    when (icon) {
+                        is LenBetaIcon.ImageVectorIcon -> {
+                            Icon(imageVector = icon.imageVector, contentDescription = null)
+                        }
+                        is LenBetaIcon.PainterResourceIcon -> {
+                            Icon(painter = painterResource(icon.id), contentDescription = null)
+                        }
+                    }
+                }
             )
         }
+    }
+}
+
+fun NavDestination?.isStudentTopLevelDestinationInHierarchy(destination: StudentTopLevelDestination) =
+    this?.hierarchy?.any {
+        it.route?.contains(destination.name, true) ?: false
+    } ?: false
+
+// TODO: Change the return type to Int for the string resource id
+fun String.toTitleTextId(): String {
+    return when (this) {
+        studentSignInRoute, studentSignUpRoute -> ""
+
+        studentProfileRoute -> "Profile"
+        else -> ""
     }
 }

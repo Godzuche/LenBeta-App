@@ -1,27 +1,13 @@
 package com.lenbeta.lenbetaapp.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Explore
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Explore
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.People
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import com.lenbeta.lenbetaapp.R.string.*
-import com.lenbeta.lenbetaapp.feature.home.student.dashboard.navigation.studentDashboardRoute
-import com.lenbeta.lenbetaapp.feature.home.student.explore.navigation.exploreRoute
-import com.lenbeta.lenbetaapp.feature.home.student.peers.navigation.peersRoute
-import com.lenbeta.lenbetaapp.feature.home.student.profile.navigation.studentProfileRoute
+import com.lenbeta.lenbetaapp.R
+import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcon
+import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcons
 
 /**
  * Models the navigation top level destinations in the app,
  */
-class StudentHomeTopLevelNavigation(private val navController: NavHostController) {
+/*class StudentHomeTopLevelNavigation(private val navController: NavHostController) {
     fun navigateTo(destination: StudentHomeTopLevelDestination) {
         navController.navigate(destination.route) {
             // Pop up to the start destination of the graph to
@@ -37,38 +23,48 @@ class StudentHomeTopLevelNavigation(private val navController: NavHostController
             restoreState = true
         }
     }
-}
+}*/
 
-data class StudentHomeTopLevelDestination(
-    val route: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val iconTextId: Int
-)
-
-val STUDENT_HOME_TOP_LEVEL_DESTINATIONS = listOf(
-    StudentHomeTopLevelDestination(
-        route = studentDashboardRoute,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
-        iconTextId = home
+enum class StudentTopLevelDestination(
+    val selectedIcon: LenBetaIcon,
+    val unselectedIcon: LenBetaIcon,
+    val iconTextId: Int,
+    val titleTextId: Int
+) {
+    STUDENT_HOME(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.Home),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.HomeOutlined),
+        iconTextId = R.string.home,
+        titleTextId = R.string.app_name
     ),
-    StudentHomeTopLevelDestination(
-        route = exploreRoute,
-        selectedIcon = Icons.Filled.Explore,
-        unselectedIcon = Icons.Outlined.Explore,
-        iconTextId = explore
+    EXPLORE(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.Explore),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.ExploreOutlined),
+        iconTextId = R.string.explore,
+        titleTextId = R.string.explore
     ),
-    StudentHomeTopLevelDestination(
-        route = peersRoute,
-        selectedIcon = Icons.Filled.People,
-        unselectedIcon = Icons.Outlined.People,
-        iconTextId = peers
+    CONNECT(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.People),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.PeopleOutlined),
+        iconTextId = R.string.connect,
+        titleTextId = R.string.connect
     ),
-    StudentHomeTopLevelDestination(
-        route = studentProfileRoute,
-        selectedIcon = Icons.Filled.Person,
-        unselectedIcon = Icons.Outlined.Person,
-        iconTextId = my_profile
+    NOTIFICATIONS(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.Notifications),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.NotificationsOutlined),
+        iconTextId = R.string.notifications,
+        titleTextId = R.string.notifications
+    ),
+    CHATS(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.Chat),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.ChatOutlined),
+        iconTextId = R.string.chats,
+        titleTextId = R.string.chats
+    ),
+    USER(
+        selectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.Person),
+        unselectedIcon = LenBetaIcon.ImageVectorIcon(LenBetaIcons.PersonOutlined),
+        iconTextId = R.string.users,
+        titleTextId = R.string.users
     )
-)
+}
