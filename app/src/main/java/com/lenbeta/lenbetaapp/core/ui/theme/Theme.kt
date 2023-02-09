@@ -54,7 +54,6 @@ fun LenBetaAppTheme(
     if (!view.isInEditMode) {
         SideEffect {
             (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-//            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

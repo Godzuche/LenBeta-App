@@ -69,10 +69,15 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
     implementation "androidx.compose.material:material-icons-extended:1.3.1"
+
+    implementation "androidx.compose.material:material:1.3.1"
+
     // Navigation compose
     implementation "androidx.navigation:navigation-compose:2.5.3"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    // Accompanist navigation animation
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.29.1-alpha"
 
     // Splash API
     implementation "androidx.core:core-splashscreen:1.0.0"
@@ -81,7 +86,6 @@ dependencies {
     // Pager and Indicators - Accompanist
     implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
     implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
-    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"
     //Coil
     implementation "io.coil-kt:coil-compose:2.2.2"
     // Dagger - Hilt

@@ -20,9 +20,11 @@ object LenBetaIcons {
     val Chat = Icons.Filled.Mail
     val ChatOutlined = Icons.Outlined.MailOutline
     val SettingsOutlined = Icons.Outlined.Settings
+    val Edit = Icons.Filled.Edit
+    val Clear = Icons.Filled.Clear
 }
 
 sealed interface LenBetaIcon {
-    data class ImageVectorIcon(val imageVector: ImageVector): LenBetaIcon
-    data class PainterResourceIcon(@DrawableRes val id: Int): LenBetaIcon
+    data class ImageVectorIcon(val imageVector: ImageVector) : LenBetaIcon
+    data class PainterResourceIcon(@DrawableRes val id: Int) : LenBetaIcon
 }

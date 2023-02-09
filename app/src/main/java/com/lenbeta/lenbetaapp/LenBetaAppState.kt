@@ -1,6 +1,7 @@
-package com.lenbeta.lenbetaapp.feature
+package com.lenbeta.lenbetaapp
 
 import android.content.res.Resources
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalConfiguration
@@ -8,8 +9,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lenbeta.lenbetaapp.feature.authentication.navigation.usersAuthRoute
 import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_in.navigation.studentSignInRoute
 import com.lenbeta.lenbetaapp.feature.authentication.student_auth.sign_up.navigation.studentSignUpRoute
@@ -23,6 +24,7 @@ import com.lenbeta.lenbetaapp.feature.home.student.navigation.navigateToStudentH
 import com.lenbeta.lenbetaapp.feature.home.student.navigation.studentHomeRoute
 import com.lenbeta.lenbetaapp.feature.notifications.navigateToNotifications
 import com.lenbeta.lenbetaapp.feature.notifications.notificationsRoute
+import com.lenbeta.lenbetaapp.feature.onboarding.navigation.onboardingRoute
 import com.lenbeta.lenbetaapp.feature.profile.navigation.studentProfileRoute
 import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination
 import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination.*
@@ -31,10 +33,11 @@ import com.lenbeta.lenbetaapp.navigation.teacherSignUpRoute
 import kotlinx.coroutines.CoroutineScope
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun rememberLenBetaAppState(
     windowSizeClass: WindowSizeClass,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController = rememberAnimatedNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): LenBetaAppState {
     return remember(navController, coroutineScope) {
@@ -92,8 +95,10 @@ class LenBetaAppState(
         exploreRoute
     )
 
+    val topBarDisabledRoutes = listOf(onboardingRoute, usersAuthRoute)
+
     val shouldShowTopBar: Boolean
-        @Composable get() = currentDestination?.route != usersAuthRoute
+        @Composable get() = !topBarDisabledRoutes.contains(currentDestination?.route)
 
     fun navigateToRoute(route: String) {
         navController.navigate(route)

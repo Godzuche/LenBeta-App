@@ -38,4 +38,6 @@
     <string name="notifications">Notifications</string>
     <string name="users">Users</string>
     <string name="profile_pic_icon">Profile picture icon</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="empty_string" />
 </resources>

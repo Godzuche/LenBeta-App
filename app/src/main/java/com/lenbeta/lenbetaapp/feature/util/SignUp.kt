@@ -1,6 +1,7 @@
 package com.lenbeta.lenbetaapp.feature.util
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,13 +19,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.withStyle
+import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcon
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,18 +36,55 @@ import androidx.compose.ui.text.withStyle
 fun DetailTextField(
     value: String,
     @StringRes label: Int,
-    keyboardOptions: KeyboardOptions,
-    keyboardActions: KeyboardActions,
     modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions? = null,
+    keyboardActions: KeyboardActions? = null,
+    placeholder: (@Composable () -> Unit)? = null,
+    trailingIcon: LenBetaIcon? = null,
+    onTrailingIconClick: () -> Unit = {},
     onValueChange: (String) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+    val defaultKeyboardActions = KeyboardActions(
+        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+    )
+    val defaultKeyboardOptions = KeyboardOptions.Default.copy(
+        autoCorrect = false,
+        capitalization = KeyboardCapitalization.Sentences,
+        imeAction = ImeAction.Next
+    )
     TextField(
         value = value,
         label = { Text(stringResource(label)) },
         onValueChange = onValueChange,
         singleLine = true,
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        keyboardOptions = keyboardOptions ?: defaultKeyboardOptions,
+        keyboardActions = keyboardActions ?: defaultKeyboardActions,
+        placeholder = placeholder,
+        trailingIcon = {
+            trailingIcon?.let {
+                when (it) {
+                    is LenBetaIcon.ImageVectorIcon -> {
+                        Icon(
+                            imageVector = it.imageVector,
+                            contentDescription = null,
+                            modifier = Modifier.clickable {
+                                onTrailingIconClick.invoke()
+                            }
+                        )
+                    }
+                    is LenBetaIcon.PainterResourceIcon -> {
+                        Icon(
+                            painter = painterResource(it.id),
+                            contentDescription = null,
+                            modifier = Modifier.clickable {
+                                onTrailingIconClick.invoke()
+                            }
+                        )
+                    }
+                }
+            }
+        },
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
@@ -55,12 +96,24 @@ fun DetailTextField(
 fun PasswordTextField(
     value: String,
     @StringRes label: Int,
-    keyboardOptions: KeyboardOptions,
-    keyboardActions: KeyboardActions,
     modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions? = null,
+    keyboardActions: KeyboardActions? = null,
     onValueChange: (String) -> Unit,
 ) {
     var isPasswordVisible by rememberSaveable { mutableStateOf(false) }
+
+    val focusManager = LocalFocusManager.current
+    val defaultKeyboardActions = KeyboardActions(
+        onDone = { focusManager.clearFocus() },
+        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+    )
+
+    val defaultKeyboardOptions = KeyboardOptions.Default.copy(
+        autoCorrect = false,
+        keyboardType = KeyboardType.Password,
+        imeAction = ImeAction.Next
+    )
 
     TextField(
         value = value,
@@ -76,8 +129,8 @@ fun PasswordTextField(
         visualTransformation = passwordVisualTransformation(
             isPasswordVisible = isPasswordVisible
         ),
-        keyboardOptions = keyboardOptions,
-        keyboardActions = keyboardActions,
+        keyboardOptions = keyboardOptions ?: defaultKeyboardOptions,
+        keyboardActions = keyboardActions ?: defaultKeyboardActions,
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
@@ -98,9 +151,9 @@ fun PasswordTrailingIcon(
     onIconClick: () -> Unit
 ) {
     val icon = if (isPasswordVisible) {
-        Icons.Filled.VisibilityOff
-    } else {
         Icons.Filled.Visibility
+    } else {
+        Icons.Filled.VisibilityOff
     }
     val description = if (isPasswordVisible) {
         "Hide password"

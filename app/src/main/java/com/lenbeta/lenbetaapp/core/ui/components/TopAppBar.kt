@@ -1,5 +1,8 @@
 package com.lenbeta.lenbetaapp.core.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -19,6 +23,7 @@ import androidx.navigation.NavDestination
 import com.lenbeta.lenbetaapp.R
 import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcon
 import com.lenbeta.lenbetaapp.core.ui.icon.LenBetaIcons
+import com.lenbeta.lenbetaapp.feature.profile.navigation.studentProfileRoute
 import com.lenbeta.lenbetaapp.feature.toTitleTextId
 import com.lenbeta.lenbetaapp.navigation.StudentTopLevelDestination
 
@@ -95,6 +100,7 @@ fun TopBar(
     currentDestination: NavDestination?,
     navigateToProfile: () -> Unit,
     navigateToSettings: () -> Unit,
+    editProfile: () -> Unit,
     navigateUp: () -> Unit
 ) {
     if (shouldShowTopBar) {
@@ -116,11 +122,9 @@ fun TopBar(
             currentDestination?.route?.let {
                 CenterAlignedTopAppBar(
                     title = {
-//                    currentDestination?.route?.let { Text(it) }
-                        Text(it.toTitleTextId())
+                        Text(stringResource(it.toTitleTextId()))
                     },
                     navigationIcon = {
-//                    if (currentDestination?.route != null) {
                         IconButton(onClick = navigateUp) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowBack,
@@ -128,6 +132,20 @@ fun TopBar(
                             )
                         }
 //                    }
+                    },
+                    actions = {
+                        AnimatedVisibility(
+                            visible = (it == studentProfileRoute),
+                            enter = expandIn(expandFrom = Alignment.Center),
+                            exit = shrinkOut(shrinkTowards = Alignment.Center)
+                        ) {
+                            IconButton(onClick = editProfile) {
+                                Icon(
+                                    imageVector = LenBetaIcons.Edit,
+                                    contentDescription = "edit Profile action"
+                                )
+                            }
+                        }
                     }
                 )
             }

@@ -1,27 +1,20 @@
 package com.lenbeta.lenbetaapp.feature.profile
 
-import android.net.Uri
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
@@ -35,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -213,18 +207,18 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
     ) {
         item(0) { ProfileHeader() }
         item(1) { Spacer(modifier = Modifier.height(24.dp)) }
-        item(2) {
-            ProfileSectionCard(
-                title = R.string.name,
-                value = "God'swill Jonathan"
-            )
-        }
-        item(3) {
-            ProfileSectionCard(
-                title = R.string.student_email,
-                value = "Godswill.jonathan@ust.edu.ng"
-            )
-        }
+        /* item(2) {
+             ProfileSectionCard(
+                 title = R.string.name,
+                 value = "God'swill Jonathan"
+             )
+         }
+         item(3) {
+             ProfileSectionCard(
+                 title = R.string.student_email,
+                 value = "Godswill.jonathan@ust.edu.ng"
+             )
+         }*/
         item(4) {
             ProfileSectionCard(
                 title = R.string.engineering,
@@ -262,6 +256,7 @@ fun StudentProfileScreen(modifier: Modifier = Modifier) {
     }
 }
 
+@Preview(showBackground = true)
 @Composable
 fun ProfileHeader(modifier: Modifier = Modifier) {
     Column(
@@ -273,14 +268,18 @@ fun ProfileHeader(modifier: Modifier = Modifier) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
             Text(
                 text = "God'swill Jonathan",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.headlineSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = "godswill.jonathan@ust.edu.ng",
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -288,17 +287,7 @@ fun ProfileHeader(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ProfileImage(modifier: Modifier) {
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
     val context = LocalContext.current
-/*    val bitmap = remember {
-        mutableStateOf<Bitmap?>(null)
-    }*/
-    val galleryLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            imageUri = uri
-        }
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -322,7 +311,7 @@ private fun ProfileImage(modifier: Modifier) {
             }*//**//*
         }*/
         val imageRequest = ImageRequest.Builder(context)
-            .data(imageUri ?: R.drawable.avatar)
+            .data(/*imageUri ?: */R.drawable.avatar)
             .size(Size.ORIGINAL)
             .crossfade(true)
             .build()
@@ -340,34 +329,6 @@ private fun ProfileImage(modifier: Modifier) {
                 .size(156.dp)
                 .clip(CircleShape)
         )
-        ProfileImageEditButton(galleryLauncher)
-    }
-}
-
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun BoxScope.ProfileImageEditButton(galleryLauncher: ManagedActivityResultLauncher<String, Uri?>) {
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(100))
-            .align(Alignment.BottomEnd)
-            .background(MaterialTheme.colorScheme.background)
-            .padding(1.dp)
-
-    ) {
-        FilledIconButton(
-            onClick = { galleryLauncher.launch("image/*") },
-            modifier = Modifier
-                .align(Alignment.BottomEnd),
-            colors = IconButtonDefaults.iconButtonColors(
-                containerColor = MaterialTheme.colorScheme.tertiaryContainer
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Edit,
-                contentDescription = "Edit button"
-            )
-        }
     }
 }
 
